@@ -1,0 +1,11 @@
+a.brand-link.logo-site img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: unset;
+    background: white;
+    margin: unset;
+    padding: unset;
+}
+.nav-link.active{
+    background-color: #dd9f5d !important;
+}
