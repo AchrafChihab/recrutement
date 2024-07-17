@@ -1,0 +1,30 @@
+<?php
+
+return array (
+  'addCategory' => 'La catégorie ne peut pas être vide.',
+  'addSkills' => 'La compétence ne peut pas être vide.',
+  'deleteWarning' => 'Vous ne pourrez pas récupérer l\'enregistrement supprimé !',
+  'areYouSure' => 'Êtes-vous sûr ?',
+  'fieldRequired' => 'Le champ est requis.',
+  'addQuestion' => 'La question ne peut pas être vide.',
+  'sendInterviewReminder' => 'Voulez-vous envoyer un rappel d\'entretien au candidat ?',
+  'sendHiredNotification' => 'Voulez-vous envoyer une confirmation d\'embauche au candidat ?',
+  'acceptSchedule' => 'Voulez-vous accepter le planning de l\'entretien ?',
+  'refuseSchedule' => 'Voulez-vous refuser le planning de l\'entretien ?',
+  'askForCandidateEmail' => 'Voulez-vous envoyer un mail au candidat ou non ?',
+  'sendEmailText' => 'Envoyer des e-mails aux :selectedApplicantsCount candidats sélectionnés !',
+  'excludeSent' => 'Exclure les envoyés',
+  'alreadyTaken' => 'est déjà pris. Essayez un autre.',
+  'nexmoKeyRequired' => 'La clé Nexmo est requise pour le statut actif.',
+  'nexmoSecretRequired' => 'Le secret Nexmo est requis pour le statut actif.',
+  'nexmoFromRequired' => 'Le champ "From" de Nexmo est requis pour le statut actif.',
+  'archiveWarning' => 'Vous pouvez consulter les candidatures archivées dans la base de données des candidats. Voulez-vous l\'archiver ?',
+  'addLocations' => 'Le lieu de travail ne peut pas être vide.',
+  'unarchiveWarning' => 'Voulez-vous la désarchiver ?',
+  'sendRejectedNotification' => 'Voulez-vous envoyer une confirmation de rejet au candidat ?',
+  'deleteStatusWarning' => 'Les candidatures dans cette colonne seront déplacées dans la base de données des candidats !',
+  'cancelWarning' => 'Voulez-vous annuler la réunion ?',
+  'endWarning' => 'Voulez-vous mettre fin à la réunion ?',
+  'warnigJobAlert' => 'Voulez-vous désactiver les alertes d\'emploi ?',
+);
+?>

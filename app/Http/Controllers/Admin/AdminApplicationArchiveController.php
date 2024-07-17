@@ -30,7 +30,7 @@ class AdminApplicationArchiveController extends AdminBaseController
      */
     public function index(Request $request)
     {
-        abort_if(!$this->user->cans('view_job_applications'), 403);
+        // abort_if(!$this->user->cans('view_job_applications'), 403);
 
         return view('admin.applications-archive.index', $this->data);
     }

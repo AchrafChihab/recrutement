@@ -17,13 +17,13 @@
     <section class="content-header">
         <div class="container-fluid">
 
-            <div class="row mb-2">
+            <div class="mb-2 row">
                 <div class="col-md-5">
-                    <h1 class="mb-xs-2">@lang('menu.candidateDatabase')</h1>
+                    <h1 class="mb-xs-2">@lang('menu.candidateDatabase') ddf</h1>
                 </div>
                 <div class="col-md-7">
                     <span class="float-sm-right">@yield('create-button')</span>
-                    <ol class="breadcrumb float-sm-right mr-2 mt-xs-2">
+                    <ol class="mr-2 breadcrumb float-sm-right mt-xs-2">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="icon-home"></i></a></li>
                         <li class="breadcrumb-item active">@lang('menu.candidateDatabase')</li>
                     </ol>
@@ -39,10 +39,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row clearfix">
-                        <div class="col-md-12 mb-4 d-flex justify-content-between">
+                    <div class="clearfix row">
+                        <div class="mb-4 col-md-12 d-flex justify-content-between">
                             <div id="search-container" class="d-flex w-50">
-                                <input id="skill" class="form-control mr-2" type="text" name="skill" placeholder="@lang('modules.applicationArchive.enterSkill')">
+                                <input id="skill" class="mr-2 form-control" type="text" name="skill" placeholder="@lang('modules.applicationArchive.enterSkill')">
                                 <a href="javascript:;" class="d-none">
                                     <i class="fa fa-times-circle-o"></i>
                                 </a>                

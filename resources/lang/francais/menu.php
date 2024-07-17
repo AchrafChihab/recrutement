@@ -45,7 +45,7 @@ return array (
   'todoList' => 'Liste de tâches',
   'jobAlert' => 'Alerte d\'emploi',
   'reports' => 'Rapport',
-  'candidateDatabase' => 'Base de données des candidats',
+  'candidateDatabase' => 'Base de données des candidats archivées',
   'applicationFormSettings' => 'Paramètres de l\'application',
   'zoom'=>'Zoom',
   'zoomMeeting'=>'Réunion Zoom',

@@ -1,18 +1,18 @@
 @forelse($upComingSchedules as $key => $upComingSchedule)
     <div>
         @php
+            // Creating a Carbon instance from the given date
             $date = \Carbon\Carbon::createFromFormat('Y-m-d', $key);
         @endphp
+        <!-- Formatting the date to 'M d, Y' format -->
         <h4>{{ $date->format('M d, Y') }}</h4>
 
-
         <ul class="scheduleul">
-            @forelse($upComingSchedule as $key => $dtData)
-
-                <li class="deco" id="schedule-{{$dtData->id}}" onclick="getScheduleDetail(event, {{$dtData->id}}) "
+            @forelse($upComingSchedule as $dtKey => $dtData)
+                <li class="deco" id="schedule-{{$dtData->id}}" onclick="getScheduleDetail(event, {{$dtData->id}})"
                     style="list-style: none;">
-                    <h5 class="text-muted"
-                        style="float: left">{{ ucfirst($dtData->jobApplication->job->title) }} </h5>
+                    <!-- Displaying the job title -->
+                    <h5 class="text-muted" style="float: left">{{ ucfirst($dtData->jobApplication->job->title) }}</h5>
                     <div class="pull-right">
                         @if($user->cans('edit_schedule'))
                             <span style="margin-right: 15px;">
@@ -30,20 +30,21 @@
                         @endif
                     </div>
                     <div class="clearfix"></div>
-                    <div class="direct-chat-name"
-                            style="font-size: 13px">{{ ucfirst($dtData->jobApplication->full_name) }}</div>
-                    <span class="direct-chat-timestamp"
-                            style="font-size: 13px">{{ $dtData->schedule_date->format('h:i a') }}</span>
+                    <!-- Displaying the applicant's full name -->
+                    <div class="direct-chat-name" style="font-size: 13px">{{ ucfirst($dtData->jobApplication->full_name) }}</div>
+                    <!-- Displaying the schedule time -->
+                    <span class="direct-chat-timestamp" style="font-size: 13px">{{ $dtData->schedule_date->format('h:i a') }}</span>
 
                     @if(in_array($user->id, $dtData->employee->pluck('user_id')->toArray()))
                         @php
+                            // Getting employee data
                             $empData = $dtData->employeeData($user->id);
                         @endphp
 
                         @if($empData->user_accept_status == 'accept')
-                            <label class="badge badge-success float-right">@lang('app.accepted')</label>
+                            <label class="float-right badge badge-success">@lang('app.accepted')</label>
                         @elseif($empData->user_accept_status == 'refuse')
-                            <label class="badge badge-danger float-right">@lang('app.refused')</label>
+                            <label class="float-right badge badge-danger">@lang('app.refused')</label>
                         @else
                             <span class="float-right">
                                 <button onclick="employeeResponse({{$empData->id}}, 'accept')"
@@ -54,18 +55,19 @@
                         @endif
                     @endif
                 </li>
-                @if($key != (count($upComingSchedule)-1))
+                <!-- Adding a horizontal line between items except for the last item -->
+                @if($dtKey != (count($upComingSchedule)-1))
                     <hr>
                 @endif
             @empty
-
+                <!-- No upcoming schedules found -->
             @endforelse
         </ul>
-
     </div>
     <hr>
 @empty
     <div>
+        <!-- No upcoming schedules found message -->
         <p>@lang('messages.noUpcomingScheduleFund')</p>
     </div>
 @endforelse

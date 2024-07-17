@@ -62,8 +62,7 @@
             <div class="col-md-12 fs-12 pt-50 pb-10 bb-1 mb-20">
                 <h4 class="theme-color mt-20">@lang('app.jobOffer')</h4>
             </div>
-
-
+            
             <div class="col-md-12" id="">
                 <div class="row gap-y">
                     <div class="col-md-12">

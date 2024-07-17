@@ -24,13 +24,13 @@
     <section class="content-header">
         <div class="container-fluid">
 
-            <div class="row mb-2">
+            <div class="mb-2 row">
                 <div class="col-md-5">
                     <h1 class="mb-xs-2">@lang('menu.jobApplications')</h1>
                 </div>
                 <div class="col-md-7">
                     <span class="float-sm-right">@yield('create-button')</span>
-                    <ol class="breadcrumb float-sm-right mr-2 mt-xs-2">
+                    <ol class="mr-2 breadcrumb float-sm-right mt-xs-2">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="icon-home"></i></a></li>
                         <li class="breadcrumb-item active">@lang('menu.jobApplications')</li>
                     </ol>
@@ -51,8 +51,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row clearfix">
-                        <div class="col-md-12 mb-20">
+                    <div class="clearfix row">
+                        <div class="mb-20 col-md-12">
                             <a href="javascript:;" id="toggle-filter" class="btn btn-outline btn-success btn-sm toggle-filter"><i
                                         class="fa fa-sliders"></i> @lang('app.filterResults')</a>
                             <a href="{{ route('admin.job-applications.index') }}" class="btn btn-outline btn-primary btn-sm">
@@ -67,7 +67,7 @@
                                 </button></a>
                         </div>
                     </div>
-                    <div class="row b-b b-t mb-3" style="display: none; background: #fbfbfb;" id="ticket-filters">
+                    <div class="mb-3 row b-b b-t" style="display: none; background: #fbfbfb;" id="ticket-filters">
                         <div class="col-md-12">
                             <h4 class="mt-2">@lang('app.filterBy') <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
                         </div>
@@ -77,7 +77,7 @@
                                     <div class="example">
                                         <div class="input-daterange input-group" id="date-range">
                                             <input type="text" class="form-control" id="start-date" placeholder="Show Results From" value="{{ now()->subDays(30)->format('Y-m-d') }}" autocomplete="off" />
-                                            <span class="input-group-addon bg-info b-0 text-white p-1">@lang('app.to')</span>
+                                            <span class="p-1 text-white input-group-addon bg-info b-0">@lang('app.to')</span>
                                             <input type="text" class="form-control" id="end-date" placeholder="Show Results To" value="{{ now()->format('Y-m-d') }}" autocomplete="off" />
                                         </div>
                                     </div>
@@ -189,7 +189,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <span class="caption-subject font-red-sunglo bold uppercase" id="modelHeading"></span>
+                    <span class="uppercase caption-subject font-red-sunglo bold" id="modelHeading"></span>
                 </div>
                 <div class="modal-body">
                     Loading...

@@ -62,7 +62,6 @@
                     <h5 class="required">@lang('modules.front.personalInformation')</h5>
                 </div>
 
-
                 <div class="col-md-8 pb-30 mt-50">
 
                     <div class="form-group">

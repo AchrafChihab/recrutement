@@ -24,12 +24,12 @@ return [
      */
     'redirectRoute' => 'login',
 
-    'envato_item_id' => $envato_item_id,
+    // 'envato_item_id' => $envato_item_id,
 
-    'envato_product_name' => $product,
+    // 'envato_product_name' => $product,
 
-    'envato_product_url' => $productUrl,
-    'plugins_url' => $verifyDomain.'/plugins/'.$envato_item_id,
+    // 'envato_product_url' => $productUrl,
+    // 'plugins_url' => $verifyDomain.'/plugins/'.$envato_item_id,
 
     /*
     * Temp folder to store update before to install it.
@@ -42,7 +42,7 @@ return [
     /*
     * URL to verify your purchase code
     */
-    'verify_url' => $verifyDomain . '/verify-purchase',
+    // 'verify_url' => $verifyDomain . '/verify-purchase',
 
     /*
      *

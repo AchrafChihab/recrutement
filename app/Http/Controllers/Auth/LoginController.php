@@ -47,9 +47,9 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        if (!$this->isLegal()) {
-            return redirect('verify-purchase');
-        }
+        // if (!$this->isLegal()) {
+        //     return redirect('verify-purchase');
+        // }
         $setting = CompanySetting::first();
         $frontTheme = ThemeSetting::first();
         return view('auth.login', compact('setting', 'frontTheme'));

@@ -77,7 +77,7 @@ return array (
   array (
     'jobOpenings' => 'Job Openings',
     'visitMainWebsite' => 'Visit Main Website',
-    'homeHeader' => 'Working at Froiden !',
+    'homeHeader' => 'Digitalia: Find your next job opportunity !',
     'applyForJob' => 'Apply for this Job',
     'shareJob' => 'Share this job opening',
     'applicationForm' => 'Application Form',
@@ -91,7 +91,7 @@ return array (
     'coverLetter' => 'Cover Letter',
     'submitApplication' => 'Submit Application',
     'applySuccessMsg' => 'You have successfully applied for this position. We will get back to you very soon :)',
-    'jobOpeningHeading' => 'Working at Froiden !',
+    'jobOpeningHeading' => 'Digitalia: Find your next job opportunity !',
     'jobOpeningText' => 'We want people to thrive at Froiden; <br>we believe you do your best work when you feel your best.',
     'questions' => 'Questions',
     'additionalDetails' => 'Additional Details',
@@ -414,7 +414,7 @@ return array (
   ),
   'jobApplicationStatus' => 
   array (
-    'applied' => 'Applied',
+    'applied' => 'appliqué',
     'phoneScreen' => 'Phone Screen',
     'interview' => 'Interview',
     'hired' => 'Hired',
