@@ -236,6 +236,23 @@ class AdminJobApplicationController extends AdminBaseController
             'female' => __('modules.front.female'),
             'others' => __('modules.front.others')
         ];
+
+        $this->required_columns = [
+            'full_name', 
+            'email', 
+            'phone', 
+            'address', 
+            'annees_experience',
+            'salaire_actuel',
+            'retention_salariale',
+            'tj_actual',
+            'tj_souhaite',
+            'disponibilite',
+            'cv',
+            'niveau_etudes',
+            'competences',
+            'statut'
+        ];
         return view('admin.job-applications.create', $this->data);
     }
 
@@ -416,8 +433,6 @@ class AdminJobApplicationController extends AdminBaseController
             ->make(true);
     }
 
-
-
     public function createSchedule(Request $request, $id)
     {
         abort_if(!$this->user->cans('add_schedule'), 403);
@@ -528,68 +543,46 @@ class AdminJobApplicationController extends AdminBaseController
         return $meeting;
     }
 
-    public function store(StoreJobApplication $request)
+    /**
+     * @param StoreRequest $request
+     * @return array
+     */
+    public function store(StoreRequest $request)
     {
-        abort_if(!$this->user->cans('add_job_applications'), 403);
+        // dd($request->all()); 
+        // Créer une nouvelle instance de JobApplication et enregistrer les données validées
+        $application = new JobApplication();  
 
-        $jobApplication = new JobApplication();
-        $jobApplication->full_name = $request->full_name;
-        $jobApplication->job_id = $request->job_id;
-        $jobApplication->status_id = 1; //applied status id
-        $jobApplication->email = $request->email;
-        $jobApplication->location_id = $request->location_id;
-        $jobApplication->phone = $request->phone;
-        $jobApplication->address = $request->address;
-        $jobApplication->cover_letter = $request->cover_letter;
-        $jobApplication->column_priority = 0;
 
-        if ($request->has('gender')) {
-            $jobApplication->gender = $request->gender;
-        }
-        if ($request->has('dob')) {
-            $jobApplication->dob = $request->dob;
-        }
-        if ($request->has('country')) {
-            $countriesArray = json_decode(file_get_contents(public_path('country-state-city/countries.json')), true)['countries'];
-            $statesArray = json_decode(file_get_contents(public_path('country-state-city/states.json')), true)['states'];
+        $application->full_name = $request->input('full_name') ?: null;
+        $application->email = $request->input('email') ?: null;
+        $application->phone = $request->input('phone') ?: null;
+        $application->address = $request->input('address') ?: null;
+        $application->annees_experience = $request->input('annees_experience') ?: null;
+        $application->statut_employee = $request->input('statut_employee') ?: null;
+        $application->salaire_actuel = $request->input('salaire_actuel') ?: null;
+        $application->salaire_souhaite = $request->input('retention_salariale') ?: null;
+        $application->tj_actual = $request->input('tj_actual') ?: null;
+        $application->tj_souhaite = $request->input('tj_souhaite') ?: null;
+        $application->disponibilite = $request->input('disponibilite') ?: null;
+        $application->preavis = $request->input('preavis') ?: null;
+        $application->niveau_etudes = $request->input('niveau_etudes') ?: null;
+        $application->statut = $request->input('statut') ?: null;
 
-            $jobApplication->country = $this->getName($countriesArray, $request->country);
-            $jobApplication->state = $this->getName($statesArray, $request->state);
-            $jobApplication->city = $request->city;
-            $jobApplication->zip_code = $request->zip_code;
-        }
+        // if ($request->hasFile('resume')) {
+        //     $file = $request->file('resume');
+        //     $path = $file->store('resumes'); // Stocker le fichier dans le dossier 'resumes'
+        //     $application->resume = $path;
+        // } else {
+        //     $application->resume = null;
+        // }
+        $application->save();
 
-        if ($request->hasFile('photo')) {
-            $jobApplication->photo = Files::uploadLocalOrS3($request->photo, 'candidate-photos', null, null, false);
-        }
-        $jobApplication->save();
-
-        if ($request->hasFile('resume')) {
-            $hashname = Files::uploadLocalOrS3($request->resume, 'documents/' . $jobApplication->id, null, null, false);
-            $jobApplication->documents()->create([
-                'name' => 'Resume',
-                'hashname' => $hashname
-            ]);
-        }
-
-        // Job Application Answer save
-        if (isset($request->answer) && !empty($request->answer)) {
-            foreach ($request->answer as $key => $value) {
-                $answer = new JobApplicationAnswer();
-                $answer->job_application_id = $jobApplication->id;
-                $answer->job_id = $request->job_id;
-                $answer->question_id = $key;
-                if ($request->hasFile('answer.' . $key)) {
-                    $answer->file = Files::uploadLocalOrS3($value, 'documents');
-                } else {
-                    $answer->answer = $value;
-                }
-                $answer->save();
-            }
-        }
-
-        return Reply::redirect(route('admin.job-applications.index'), __('menu.jobApplications') . ' ' . __('messages.createdSuccessfully'));
+        // Retourner une réponse JSON
+        return response()->json(['status' => 'success']);
     }
+    
+    
 
     public function update(UpdateJobApplication $request, $id)
     {

@@ -36,10 +36,10 @@ class StoreRequest extends CoreRequest
             ];
         }else{
             $data = [
-            "candidates"    => "required",
-            "employees.0"      => "required",
-            "scheduleDate"    => "required",
-            "scheduleTime"    => "required",
+            "candidates"    => "nullable",
+            "employees.0"      => "nullable",
+            "scheduleDate"    => "nullable",
+            "scheduleTime"    => "nullable",
         ];
     }
     return $data;

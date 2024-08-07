@@ -789,8 +789,7 @@ h6{
 
 
 
- a.brand-link.logo-site img {
-    height: 100%;
+ a.brand-link.logo-site img { 
     width: 100%;
     max-height: none;
     background: white;

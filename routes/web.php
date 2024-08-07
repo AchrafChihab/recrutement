@@ -140,6 +140,7 @@ Route::group(['middleware' => 'auth'], function () {
             
             Route::resource('jobs', 'AdminJobsController');
 
+            Route::post('job-applications/store', 'AdminJobApplicationController@store')->name('admin.job-applications.store');
             Route::post('job-applications/rating-save/{id?}', 'AdminJobApplicationController@ratingSave')->name('job-applications.rating-save');
             Route::get('job-applications/create-schedule/{id?}', 'AdminJobApplicationController@createSchedule')->name('job-applications.create-schedule');
             Route::post('job-applications/store-schedule', 'AdminJobApplicationController@storeSchedule')->name('job-applications.store-schedule');
