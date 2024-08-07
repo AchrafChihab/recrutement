@@ -221,7 +221,8 @@
                     },
                     success: function(response) {
                         console.log('Réponse du serveur:', response);
-                        alert('Données sauvegardées avec succès');
+                        // alert('Données sauvegardées avec succès');
+                        window.reload();
                         // Vous pouvez également rediriger ou réinitialiser le formulaire ici
                     },
                     error: function(xhr) {
