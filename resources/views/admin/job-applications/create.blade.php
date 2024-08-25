@@ -351,6 +351,49 @@
             console.error('Detailed error:', response);
         }
 
+        $(document).ready(function() {
+            $('#save-form').click(function(e) {
+                e.preventDefault();  
+                var formData = new FormData($('#createForm')[0]);
+                console.log(formData);
+                // Affichez les valeurs pour le débogage
+                for (var pair of formData.entries()) {
+                    console.log(pair[0]+ ', '+ pair[1]); 
+                } 
+                $.ajax({
+                    url: '{{ route('admin.job-applications.store') }}', // URL de votre route
+                    type: 'POST',
+                    data: formData,
+                    processData: false, // Important pour éviter la transformation automatique
+                    contentType: false, // Important pour les fichiers
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Assurez-vous que le token CSRF est inclus
+                    },
+                    success: function(response) {
+                        console.log('Réponse du serveur:', response);
+                        // alert('Données sauvegardées avec succès');
+                        window.reload();
+                        // Vous pouvez également rediriger ou réinitialiser le formulaire ici
+                    },
+                    error: function(xhr) {
+                        console.error('Erreur de la requête:', xhr.responseText); 
+                    }
+                });
+            });
+
+            function togglePaymentFields() {
+                var paymentType = document.getElementById('payment_type').value;
+                var dispo = document.getElementById('dispo').value;
+
+                if (paymentType === 'salarier') {
+                    document.getElementById('salarierFields').style.display = 'block';
+                    document.getElementById('freelanceFields').style.display = 'none';
+                } else {
+                    document.getElementById('salarierFields').style.display = 'none';
+                    document.getElementById('freelanceFields').style.display = 'block';
+                }
+  
+
 
 
 
