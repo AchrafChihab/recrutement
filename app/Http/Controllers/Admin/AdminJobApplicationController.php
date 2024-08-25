@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\CandidateScheduleInterview;
 use App\Http\Controllers\Admin\AdminBaseController;
 use App\Http\Requests\InterviewSchedule\StoreRequest;
+use Illuminate\Support\Facades\Log;
 use App\JobJobLocation;
 
 class AdminJobApplicationController extends AdminBaseController
@@ -549,38 +550,66 @@ class AdminJobApplicationController extends AdminBaseController
      */
     public function store(StoreRequest $request)
     {
-        // dd($request->all()); 
-        // Créer une nouvelle instance de JobApplication et enregistrer les données validées
-        $application = new JobApplication();  
-
-
-        $application->full_name = $request->input('full_name') ?: null;
-        $application->email = $request->input('email') ?: null;
-        $application->phone = $request->input('phone') ?: null;
-        $application->address = $request->input('address') ?: null;
-        $application->annees_experience = $request->input('annees_experience') ?: null;
-        $application->statut_employee = $request->input('statut_employee') ?: null;
-        $application->salaire_actuel = $request->input('salaire_actuel') ?: null;
-        $application->salaire_souhaite = $request->input('retention_salariale') ?: null;
-        $application->tj_actual = $request->input('tj_actual') ?: null;
-        $application->tj_souhaite = $request->input('tj_souhaite') ?: null;
-        $application->disponibilite = $request->input('disponibilite') ?: null;
-        $application->preavis = $request->input('preavis') ?: null;
-        $application->niveau_etudes = $request->input('niveau_etudes') ?: null;
-        $application->statut = $request->input('statut') ?: null;
-
-        // if ($request->hasFile('resume')) {
-        //     $file = $request->file('resume');
-        //     $path = $file->store('resumes'); // Stocker le fichier dans le dossier 'resumes'
-        //     $application->resume = $path;
-        // } else {
-        //     $application->resume = null;
-        // }
-        $application->save();
-
-        // Retourner une réponse JSON
-        return response()->json(['status' => 'success']);
+        Log::info('Job Application Request Data:', $request->all());
+    
+        // Retrieve job location data
+        $jobLocationData = JobJobLocation::where('job_id', $request->job_id)->first();
+    
+        $jobApplication = new JobApplication();
+        $jobApplication->full_name = $request->full_name;
+        $jobApplication->job_id = $request->job_id;
+        $jobApplication->location_id = $request->location_id ?? $jobLocationData->id;
+        $jobApplication->status_id = 1; // applied status id
+        $jobApplication->email = $request->email;
+        $jobApplication->phone = $request->phone;
+        $jobApplication->address = $request->address;
+        $jobApplication->annees_experience = $request->annees_experience;
+        $jobApplication->disponibilite = $request->disponibilite;
+        $jobApplication->preavis = $request->preavis; // Save preavis if provided
+        $jobApplication->niveau_etudes = $request->niveau_etudes;
+    
+        // Handle conditional fields based on payment type
+        if ($request->statut_employee === 'salarier') {
+            $jobApplication->salaire_actuel = $request->salaire_actuel;
+            $jobApplication->salaire_souhaite = $request->salaire_souhaite;
+        } elseif ($request->statut_employee === 'freelance') {
+            $jobApplication->tj_actual = $request->tj_actual;
+            $jobApplication->tj_souhaite = $request->tj_souhaite;
+        }
+    
+        // Save job application before uploading files
+        $jobApplication->save();
+    
+        // Upload resume and associate it with the job application
+        if ($request->hasFile('resume')) {
+            $resumeHashname = Files::uploadLocalOrS3($request->resume, 'documents/' . $jobApplication->id);
+            $jobApplication->documents()->create([
+                'name' => 'Resume',
+                'hashname' => $resumeHashname,
+            ]);
+        }
+    
+        // Upload photo if provided
+        if ($request->hasFile('photo')) {
+            $photoHashname = Files::uploadLocalOrS3($request->photo, 'candidate-photos');
+            $jobApplication->photo = $photoHashname;
+        }
+    
+        $jobApplication->cover_letter = $request->cover_letter;
+        $jobApplication->column_priority = 0;
+    
+        // Save updated job application
+        $jobApplication->save();
+    
+        // Notify admins and send application received email
+        $users = User::allAdmins();
+        $global = $this->global;
+        $linkedin = $request->has('apply_type');
+    
+        return Reply::dataOnly(['status' => 'success', 'msg' => __('modules.front.applySuccessMsg')]);
     }
+    
+    
     
     
 
@@ -623,8 +652,7 @@ class AdminJobApplicationController extends AdminBaseController
         $isStatusDirty = $jobApplication->isDirty('status_id');
 
         $jobApplication->save();
-
-        if ($request->hasFile('resume')) {
+ 
 
             if ($jobApplication->resumeDocument) {
                 Files::deleteFile($jobApplication->resumeDocument->hashname, 'documents/' . $jobApplication->id);
@@ -641,7 +669,7 @@ class AdminJobApplicationController extends AdminBaseController
                     'hashname' => $hashname
                 ]
             );
-        }
+      
         // Job Application Answer save
         if (isset($request->answer) && count($request->answer) > 0) {
             foreach ($request->answer as $key => $value) {
@@ -664,7 +692,7 @@ class AdminJobApplicationController extends AdminBaseController
             Notification::send($jobApplication, new CandidateStatusChange($jobApplication));
         }
 
-        return Reply::redirect(route('admin.job-applications.table'), __('menu.jobApplications') . ' ' . __('messages.updatedSuccessfully'));
+        return Reply::dataOnly(['status' => 'success', 'msg' => __('modules.front.applySuccessMsg')]);
     }
 
     public function destroy($id)

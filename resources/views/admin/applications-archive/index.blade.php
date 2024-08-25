@@ -19,7 +19,7 @@
 
             <div class="mb-2 row">
                 <div class="col-md-5">
-                    <h1 class="mb-xs-2">@lang('menu.candidateDatabase') ddf</h1>
+                    <h1 class="mb-xs-2">@lang('menu.candidateDatabase')</h1>
                 </div>
                 <div class="col-md-7">
                     <span class="float-sm-right">@yield('create-button')</span>

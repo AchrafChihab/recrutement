@@ -104,7 +104,7 @@ return array (
   'all' => 'Tous',
   'loadmore' => 'Charger plus',
   'address' => 'Adresse',
-  'company' => 'Entreprise',
+  'company' => 'Entreprises',
   'filter' => 'Filtrer',
   'viewAll' => 'Voir tout',
   'background' => 'Arrière-plan',
