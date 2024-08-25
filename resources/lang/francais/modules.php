@@ -424,7 +424,7 @@ return array (
   'applicationArchive' => 
   array (
     'enterSkill' => 'Entrez la compétence pour filtrer, par exemple : PHP, Java, etc.',
-    'exportFileDescription' => 'Fichier de base de données des candidats',
+    'exportFileDescription' => 'Fichier de base de données des candidats Archivers',
     'exportFileName' => 'base-de-donnees-candidats',
 ),
   'applicationSetting' => 
